@@ -3,7 +3,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const { get } = require("lodash");
 const e = require("express");
 var _ = require("lodash");
 
@@ -16,6 +15,10 @@ const contactContent =
 
 const app = express();
 const posts = [];
+const user = {
+  email: "marcospainnn@gmail.com",
+  password: "123",
+};
 
 app.set("view engine", "ejs");
 
@@ -23,6 +26,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
+  res.render("signin.ejs");
+});
+app.post("/", (req, res) => {
+  const userEmail = req.body.email;
+  const userPass = req.body.password;
+  if (userEmail === user.email && password === user.password) {
+    res.redirect("/home");
+  } else {
+    res.redirect("/");
+  }
+});
+
+app.get("/home", (req, res) => {
   res.render("home", {
     homeStartingContent: homeStartingContent,
     posts: posts,
